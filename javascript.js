@@ -1,5 +1,3 @@
-let nbOne;
-let nbTwo;
 let operator;
 let display = "";
 let array;
@@ -27,7 +25,7 @@ function getOperator(disp) {
         operator = "-";
     } else if (disp.includes("*")) {
         operator = "*";
-    } else {
+    } else if (disp.includes("/")) {
         operator = "/";
     };
     return operator;
@@ -61,7 +59,7 @@ const para = document.querySelector("p");
 
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
-        display = display + btn.innerHTML;
+        display = display + btn.value;
         para.textContent = display;
         return display;
     });
@@ -71,8 +69,7 @@ const acBtn = document.querySelector(".btn-clear");
 
 acBtn.addEventListener("click", () => {
     display = ""
-    para.textContent = display;
-    return display;
+    para.textContent = "";
 });
 
 const equal = document.querySelector(".btn-equal");
@@ -80,5 +77,6 @@ const equal = document.querySelector(".btn-equal");
 equal.addEventListener("click", () => {
     getOperator(display);
     split(display);
-    para.textContent = operate(parseInt(array[0]), parseInt(array[1]), operator);
+    display = operate(parseInt(array[0]), parseInt(array[1]), operator);
+    para.textContent = display;
 });
