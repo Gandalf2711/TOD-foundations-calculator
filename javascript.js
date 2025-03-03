@@ -1,82 +1,83 @@
-let operator;
-let display = "";
-let array;
+let firstNb = "";
+let secondNb = "";
+let firstOp = "";
+let secondOp = "";
 
-function add (a, b) {
-    return a + b;
-};
-
-function substract (a, b) {
-    return a - b;
-};
-
-function multiply (a, b) {
-    return a * b;
-};
-
-function divide (a, b) {
-    return a / b;
-};
-
-function getOperator(disp) {
-    if(disp.includes("+")) {
-        operator = "+";
-    } else if (disp.includes("-")) {
-        operator = "-";
-    } else if (disp.includes("*")) {
-        operator = "*";
-    } else if (disp.includes("/")) {
-        operator = "/";
-    };
-    return operator;
-};
-
-function split(arr) {
-    return array = display.split(operator);
-}
+const btnsNb = document.querySelectorAll(".btn-nb");
+const btnsOp = document.querySelectorAll(".btn-operator");
+const acBtn = document.querySelector(".btn-clear");
+const equal = document.querySelector(".btn-equal");
+const para = document.querySelector(".display");
 
 function operate(a, b, op) {
-    let result;
     switch(op) {
         case "+":
-            result = add(a, b);
+            return a + b;
             break;
         case "-":
-            result = substract(a, b);
+            return a - b;
             break;
         case "*":
-            result = multiply(a, b);
+            return a * b;
             break;
         case "/":
-            result = divide(a, b);
+            return a / b;
             break;
     }
-    return result;
 };
 
-const btns = document.querySelectorAll("#btn");
-const para = document.querySelector("p");
-
-btns.forEach((btn) => {
+btnsNb.forEach((btn) => {
     btn.addEventListener("click", () => {
-        display = display + btn.value;
-        para.textContent = display;
-        return display;
+        if (firstOp === ""){
+            if(para.textContent === "") {
+                para.textContent = btn.value;
+            } else if (para.textContent === firstNb) {
+                para.textContent = btn.value;
+            } else {
+                para.textContent += btn.value;
+            };
+        } else {
+            if(para.textContent == firstNb) {
+                para.textContent = btn.value;
+            } else {
+                para.textContent += btn.value;
+            };
+        };
     });
 });
 
-const acBtn = document.querySelector(".btn-clear");
-
-acBtn.addEventListener("click", () => {
-    display = ""
-    para.textContent = "";
+btnsOp.forEach((btn) => {
+    btn.addEventListener("click", () => {     
+        if (firstOp === "") {
+            firstOp = btn.value;
+            firstNb = para.textContent;
+        } else if (firstOp != "" && secondOp === "") {
+            secondOp = btn.value;
+            secondNb = "";
+        } else if (firstOp != "" && secondOp != "") {
+            secondOp = btn.value;
+            secondNb = "";
+            console.log(firstNb, secondNb, firstOp);
+        };
+    });
 });
 
-const equal = document.querySelector(".btn-equal");
-
 equal.addEventListener("click", () => {
-    getOperator(display);
-    split(display);
-    display = operate(parseInt(array[0]), parseInt(array[1]), operator);
-    para.textContent = display;
+    if (secondOp === "") {
+        secondNb = para.textContent;
+        para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), firstOp);
+        firstNb = para.textContent;
+    } else {
+        secondNb = para.textContent;
+        para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), secondOp);
+        firstNb = para.textContent;
+    }
+});
+
+acBtn.addEventListener("click", () => {
+    firstNb = "";
+    secondNb = "";
+    firstOp = "";
+    secondOp = "";
+    para.textContent = "";
 });

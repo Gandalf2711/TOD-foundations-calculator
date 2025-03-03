@@ -1,30 +1,41 @@
+@font-face {
+    font-family: 'digital-7';
+    src: url(../TOD-foundations-calculator/font/digital-7.ttf);
+}
+
 .calculator {
     display: flex;
     flex-direction: column;
-    background-color: black;
-    width: 256px;
+    background-color: #c5c7c5;
+    width: 300px;
+    height: 500px;
     border-radius: 12px;
-    padding: 10px;
+    padding: 30px;
 }
 
 .display {
     color: white;
+    background-color: #292b2a;
     text-align: right;
-    font-size: 24px;
-    padding: 10px;
-    height: 60px;
+    font-family: 'digital-7';
+    border-radius: 12px;
+    font-size: 40px;
+    padding-top: 20px;
+    padding-right: 30px;
+    height: 100px;
 }
 
 .btn-container {
     display: flex;
     flex-wrap: wrap;
+    padding: 20px;
 }
 
 .btn-nb,
 .btn-operator,
 .btn-clear,
-.btn-equal {
-    border-radius: 50%;
+.btn-equal,
+.btn-transform {
     border: none;
     text-align: center;
     text-decoration: none;
@@ -41,9 +52,17 @@
 
 .btn-operator {
     color: white;
-    background-color: #f59c16;
+    background-color: #e83727;
 }
 
 .btn-clear {
-    background-color: #abaaa7;
+    background-color: white;
+}
+
+.btn-equal {
+    background-color: #37c920;
+}
+
+.btn-transform {
+    background-color: #3679c9;
 }
