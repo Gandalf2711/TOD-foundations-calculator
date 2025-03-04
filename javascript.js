@@ -53,24 +53,36 @@ btnsOp.forEach((btn) => {
             firstNb = para.textContent;
         } else if (firstOp != "" && secondOp === "") {
             secondOp = btn.value;
+            secondNb = para.textContent;
+            para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), firstOp);
             secondNb = "";
+            firstNb = para.textContent;
         } else if (firstOp != "" && secondOp != "") {
+            secondNb = para.textContent;
+            para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), secondOp);
             secondOp = btn.value;
-            secondNb = "";
-            console.log(firstNb, secondNb, firstOp);
+            firstNb = para.textContent;
         };
     });
 });
 
 equal.addEventListener("click", () => {
-    if (secondOp === "") {
-        secondNb = para.textContent;
-        para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), firstOp);
-        firstNb = para.textContent;
-    } else {
+    if (firstOp === "") {
+        para.textContent = para.textContent;
+    } else if (secondOp != "") {
         secondNb = para.textContent;
         para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), secondOp);
         firstNb = para.textContent;
+        secondNb = "";
+        firstOp = "";
+        secondOp = "";
+    } else {
+        secondNb = para.textContent;
+        para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), firstOp);
+        firstNb = para.textContent;
+        secondNb = "";
+        firstOp = "";
+        secondOp = "";
     }
 });
 
