@@ -1,14 +1,15 @@
 let firstNb = "";
 let secondNb = "";
-let firstOp = "";
-let secondOp = "";
+let operator = "";
 
 const btnsNb = document.querySelectorAll(".btn-nb");
 const btnsOp = document.querySelectorAll(".btn-operator");
+const btnsTrans = document.querySelectorAll(".btn-transform");
 const acBtn = document.querySelector(".btn-clear");
 const equal = document.querySelector(".btn-equal");
 const para = document.querySelector(".display");
 
+//Operations
 function operate(a, b, op) {
     switch(op) {
         case "+":
@@ -21,75 +22,105 @@ function operate(a, b, op) {
             return a * b;
             break;
         case "/":
-            return a / b;
+            //To prevent division by 0
+            if (b == "0" ) {
+                return "Nope";
+            } else {
+                return a / b;
+            };
             break;
     }
 };
 
+//Round up to 12 decimals
+function roundToTwelve(num) {
+    if(!isNaN(num)) {
+        return +(Math.round(num + "e+12")  + "e-12");
+    } else {
+        return num;
+    };
+};
+
+//Input operands
 btnsNb.forEach((btn) => {
     btn.addEventListener("click", () => {
-        if (firstOp === ""){
-            if(para.textContent === "") {
+        if (operator === "") {
+            if (para.textContent === "") {
                 para.textContent = btn.value;
-            } else if (para.textContent === firstNb) {
-                para.textContent = btn.value;
+                //first entry
             } else {
                 para.textContent += btn.value;
+                //increment the first entry if more than one digit
             };
+            firstNb = para.textContent;
         } else {
-            if(para.textContent == firstNb) {
+            if (para.textContent === firstNb) {
                 para.textContent = btn.value;
+                //second entry 
             } else {
                 para.textContent += btn.value;
+                //increment second entry if more than one digit
+            };
+            secondNb = para.textContent;
+        };
+    });
+});
+
+//Input operator
+btnsOp.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        if (operator == "") {
+            operator = btn.value;
+        } else {
+            if (secondNb !== "") {
+                //case where user does not hit the equal button, but new operator
+                console.log(firstNb, secondNb, operator);
+                para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
+                operator = btn.value;
+                firstNb = para.textContent;
+                secondNb = "";
+            } else {
+                //case where user hit two operators in succession
+                operator = btn.value;
             };
         };
     });
 });
 
-btnsOp.forEach((btn) => {
-    btn.addEventListener("click", () => {     
-        if (firstOp === "") {
-            firstOp = btn.value;
-            firstNb = para.textContent;
-        } else if (firstOp != "" && secondOp === "") {
-            secondOp = btn.value;
-            secondNb = para.textContent;
-            para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), firstOp);
-            secondNb = "";
-            firstNb = para.textContent;
-        } else if (firstOp != "" && secondOp != "") {
-            secondNb = para.textContent;
-            para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), secondOp);
-            secondOp = btn.value;
-            firstNb = para.textContent;
+//Equal
+equal.addEventListener("click", () => {
+    if (secondNb != "") {
+        para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
+        firstNb = para.textContent;
+        secondNb = "";
+    } else {
+        //prevent error when pressing equal without second operand
+        para.textContent = para.textContent;
+    };
+});
+
+//Square root, positive/Negative, pourcentage
+btnsTrans.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        switch(btn.value) {
+            case "squareRoot":
+                para.textContent = roundToTwelve(Math.sqrt(para.textContent));
+                break;
+            case "posNeg":
+                para.textContent = para.textContent*-1;
+                break;
+            case "pourc":
+                para.textContent = para.textContent/100;
+                break;
         };
     });
 });
 
-equal.addEventListener("click", () => {
-    if (firstOp === "") {
-        para.textContent = para.textContent;
-    } else if (secondOp != "") {
-        secondNb = para.textContent;
-        para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), secondOp);
-        firstNb = para.textContent;
-        secondNb = "";
-        firstOp = "";
-        secondOp = "";
-    } else {
-        secondNb = para.textContent;
-        para.textContent = operate(parseFloat(firstNb), parseFloat(secondNb), firstOp);
-        firstNb = para.textContent;
-        secondNb = "";
-        firstOp = "";
-        secondOp = "";
-    }
-});
-
+//Clear
 acBtn.addEventListener("click", () => {
     firstNb = "";
     secondNb = "";
-    firstOp = "";
+    operator = "";
     secondOp = "";
     para.textContent = "";
 });
