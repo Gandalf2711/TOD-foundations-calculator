@@ -1,4 +1,4 @@
-let firstNb = "";
+let firstNb = "0";
 let secondNb = "";
 let operator = "";
 
@@ -8,6 +8,8 @@ const btnsTrans = document.querySelectorAll(".btn-transform");
 const acBtn = document.querySelector(".btn-clear");
 const equal = document.querySelector(".btn-equal");
 const para = document.querySelector(".display");
+
+para.textContent = firstNb;
 
 //Operations
 function operate(a, b, op) {
@@ -45,7 +47,7 @@ function roundToTwelve(num) {
 btnsNb.forEach((btn) => {
     btn.addEventListener("click", () => {
         if (operator === "") {
-            if (para.textContent === "") {
+            if (para.textContent === "" || para.textContent === "0") {
                 para.textContent = btn.value;
                 //first entry
             } else {
@@ -118,9 +120,9 @@ btnsTrans.forEach((btn) => {
 
 //Clear
 acBtn.addEventListener("click", () => {
-    firstNb = "";
+    firstNb = "0";
     secondNb = "";
     operator = "";
     secondOp = "";
-    para.textContent = "";
+    para.textContent = firstNb;
 });
