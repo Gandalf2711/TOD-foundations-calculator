@@ -56,9 +56,9 @@ btnsNb.forEach((btn) => {
             };
             firstNb = para.textContent;
         } else {
-            if (para.textContent === firstNb) {
+            if (para.textContent === firstNb || para.textContent == "Nope") {
                 para.textContent = btn.value;
-                //second entry 
+                //second entry
             } else {
                 para.textContent += btn.value;
                 //increment second entry if more than one digit
@@ -71,6 +71,10 @@ btnsNb.forEach((btn) => {
 //Input operator
 btnsOp.forEach((btn) => {
     btn.addEventListener("click", () => {
+        if (firstNb === "Nope") {
+            firstNb = "0";
+        };
+        
         if (operator == "") {
             operator = btn.value;
         } else {
@@ -91,6 +95,10 @@ btnsOp.forEach((btn) => {
 
 //Equal
 equal.addEventListener("click", () => {
+    if (firstNb == "Nope") {
+        firstNb = "0";
+    };
+
     if (secondNb != "") {
         para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
         firstNb = para.textContent;
