@@ -8,6 +8,7 @@ const btnsTrans = document.querySelectorAll(".btn-transform");
 const acBtn = document.querySelector(".btn-clear");
 const equal = document.querySelector(".btn-equal");
 const para = document.querySelector(".display");
+const paraOp = document.querySelector(".display-operator");
 
 para.textContent = firstNb;
 
@@ -35,9 +36,9 @@ function operate(a, b, op) {
 };
 
 //Round up to 12 decimals
-function roundToTwelve(num) {
+function roundToTen(num) {
     if(!isNaN(num)) {
-        return +(Math.round(num + "e+12")  + "e-12");
+        return +(Math.round(num + "e+10")  + "e-10");
     } else {
         return num;
     };
@@ -78,11 +79,13 @@ btnsOp.forEach((btn) => {
         
         if (operator == "") {
             operator = btn.value;
+            paraOp.textContent = btn.innerHTML;
         } else {
             if (secondNb !== "") {
                 //case where user does not hit the equal button, but new operator
-                para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
+                para.textContent = roundToTen(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
                 operator = btn.value;
+                paraOp.textContent = btn.innerHTML;
                 firstNb = para.textContent;
                 secondNb = "";
             } else {
@@ -100,11 +103,12 @@ equal.addEventListener("click", () => {
     };
 
     if (secondNb != "") {
-        para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
+        para.textContent = roundToTen(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
         //reset variables so a new calculation is started after pressing equal
         firstNb = "";
         secondNb = "";
         operator = "";
+        paraOp.textContent = "";
     } else {
         //prevent error when pressing equal without second operand
         para.textContent = para.textContent;
@@ -116,13 +120,16 @@ btnsTrans.forEach((btn) => {
     btn.addEventListener("click", () => {
         switch(btn.value) {
             case "squareRoot":
-                para.textContent = roundToTwelve(Math.sqrt(para.textContent));
+                para.textContent = roundToTen(Math.sqrt(para.textContent));
+                paraOp.textContent = btn.innerHTML;
                 break;
             case "posNeg":
                 para.textContent = para.textContent*-1;
+                paraOp.textContent = btn.innerHTML;
                 break;
             case "pourc":
                 para.textContent = para.textContent/100;
+                paraOp.textContent = btn.innerHTML;
                 break;
         };
     });
@@ -135,4 +142,5 @@ acBtn.addEventListener("click", () => {
     operator = "";
     secondOp = "";
     para.textContent = firstNb;
+    paraOp.textContent = "";
 });

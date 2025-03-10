@@ -20,16 +20,29 @@ body {
     background-color: #c5c7c5;
 }
 
-.display {
-    color: white;
+.display-container {
+    display:flex;
     background-color: #292b2a;
-    text-align: right;
-    font-family: 'digital-7';
     border-radius: 12px;
     font-size: 40px;
     padding-top: 20px;
     padding-right: 30px;
     height: 100px;
+}
+
+.display {
+    color: white;
+    text-align: right;
+    font-family: 'digital-7';
+    flex: 1;
+}
+
+.display-operator {
+    color:white;
+    text-align: left;
+    font-family: 'digital-7';
+    width: 30px;
+    padding-left: 30px;
 }
 
 .btn-container {
