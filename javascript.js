@@ -47,7 +47,7 @@ function roundToTwelve(num) {
 btnsNb.forEach((btn) => {
     btn.addEventListener("click", () => {
         if (operator === "") {
-            if (para.textContent === "" || para.textContent === "0") {
+            if (para.textContent === "" || para.textContent === "0" || firstNb === "") {
                 para.textContent = btn.value;
                 //first entry
             } else {
@@ -56,6 +56,7 @@ btnsNb.forEach((btn) => {
             };
             firstNb = para.textContent;
         } else {
+            firstNb = para.textContent;
             if (para.textContent === firstNb || para.textContent == "Nope") {
                 para.textContent = btn.value;
                 //second entry
@@ -80,7 +81,6 @@ btnsOp.forEach((btn) => {
         } else {
             if (secondNb !== "") {
                 //case where user does not hit the equal button, but new operator
-                console.log(firstNb, secondNb, operator);
                 para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
                 operator = btn.value;
                 firstNb = para.textContent;
@@ -101,8 +101,10 @@ equal.addEventListener("click", () => {
 
     if (secondNb != "") {
         para.textContent = roundToTwelve(operate(parseFloat(firstNb), parseFloat(secondNb), operator));
-        firstNb = para.textContent;
+        //reset variables so a new calculation is started after pressing equal
+        firstNb = "";
         secondNb = "";
+        operator = "";
     } else {
         //prevent error when pressing equal without second operand
         para.textContent = para.textContent;
