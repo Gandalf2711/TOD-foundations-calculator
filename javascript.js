@@ -51,19 +51,22 @@ btnsNb.forEach((btn) => {
             if (para.textContent === "" || para.textContent === "0" || firstNb === "") {
                 para.textContent = btn.value;
                 //first entry
+                console.log("01");
             } else {
                 para.textContent += btn.value;
                 //increment the first entry if more than one digit
+                console.log("02");
             };
             firstNb = para.textContent;
         } else {
-            firstNb = para.textContent;
             if (para.textContent === firstNb || para.textContent == "Nope") {
                 para.textContent = btn.value;
                 //second entry
+                console.log("03");
             } else {
                 para.textContent += btn.value;
                 //increment second entry if more than one digit
+                console.log("04");
             };
             secondNb = para.textContent;
         };
@@ -78,6 +81,7 @@ btnsOp.forEach((btn) => {
         };
         
         if (operator == "") {
+            firstNb = para.textContent;
             operator = btn.value;
             paraOp.textContent = btn.innerHTML;
         } else {
@@ -91,6 +95,7 @@ btnsOp.forEach((btn) => {
             } else {
                 //case where user hit two operators in succession
                 operator = btn.value;
+                paraOp.textContent = btn.innerHTML;
             };
         };
     });
